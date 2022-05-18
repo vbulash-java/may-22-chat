@@ -38,7 +38,7 @@
             <Menu text="Help">
                 <MenuItem onAction="#mockAction" text="Open" />
                 <MenuItem onAction="#mockAction" text="Connect" />
-                <MenuItem onAction="#mockAction" text="Manual" />
+                <MenuItem onAction="#showManual" text="Manual" />
                 <MenuItem onAction="#mockAction" text="Exit" />
             </Menu>
         </MenuBar>
