@@ -5,12 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.net.URL;
 import java.util.List;
@@ -22,10 +23,13 @@ public class ChatController implements Initializable {
     private VBox mainPanel;
 
     @FXML
-    private TextArea chatArea;
+    private TextFlow chatArea;
 
     @FXML
     private ListView<String> contacts;
+
+    @FXML
+    private CheckBox messageAll;
 
     @FXML
     private TextField inputField;
@@ -42,13 +46,25 @@ public class ChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
-        String focused = contacts.getFocusModel().getFocusedItem();
         String text = inputField.getText();
         if (text == null || text.isBlank()) {
             return;
         }
-        chatArea.appendText("<b>" + focused + "</b>: " + text + System.lineSeparator());
+
+        boolean toAll = messageAll.isSelected();
+        String focused = toAll ? "всех" : contacts.getFocusModel().getFocusedItem();
+
+        Text contact = new Text(String.format("для %s : ", focused));
+        contact.setFill(Color.BLUE);
+        contact.setFont(Font.font("System", FontWeight.BOLD, 12));
+
+        Text message = new Text(text + System.lineSeparator());
+        contact.setFont(Font.font("System", FontWeight.NORMAL, 12));
+
+        chatArea.getChildren().addAll(contact, message);
+
         inputField.clear();
+        messageAll.setSelected(false);
     }
 
     @Override
