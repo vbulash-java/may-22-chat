@@ -42,11 +42,12 @@ public class ChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
+        String focused = contacts.getFocusModel().getFocusedItem();
         String text = inputField.getText();
         if (text == null || text.isBlank()) {
             return;
         }
-        chatArea.appendText(text + System.lineSeparator());
+        chatArea.appendText("<b>" + focused + "</b>: " + text + System.lineSeparator());
         inputField.clear();
     }
 
